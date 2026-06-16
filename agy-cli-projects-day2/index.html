@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pour-Over Portal & Coffee Diary</title>
+    <meta name="description" content="A premium hub for discovering hand-drip coffee resources, YouTube tutorials, and tracking your daily brewing experiments." />
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="dark-theme">
+    <div id="app" class="app-container">
+      
+      <!-- Top Decorative Glows -->
+      <div class="glow-orb orb-1" aria-hidden="true"></div>
+      <div class="glow-orb orb-2" aria-hidden="true"></div>
+
+      <!-- Header Section -->
+      <header class="app-header">
+        <div class="header-logo">
+          <span class="logo-emoji" aria-hidden="true">☕</span>
+          <div class="logo-text">
+            <h1 id="app-title">Pour-Over Portal</h1>
+            <p id="app-subtitle">Discover resources & chronicle your brewing journey</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation" aria-label="Main Navigation">
+          <button id="nav-btn-resources" class="nav-tab active" aria-selected="true" aria-controls="resources-tab-panel">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3.5A2.5 2.5 0 0 1 6.5 1M20 3.5V17m0-13.5v13.5M20 3.5H6.5"/></svg>
+            Resources & News
+          </button>
+          <button id="nav-btn-diary" class="nav-tab" aria-selected="false" aria-controls="diary-tab-panel">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            My Coffee Diary
+          </button>
+        </nav>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="app-main">
+        
+        <!-- Tab Panel 1: Resources -->
+        <section id="resources-tab-panel" class="tab-panel active" role="tabpanel" aria-labelledby="nav-btn-resources">
+          <div class="search-filter-bar">
+            <div class="search-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="news-search" placeholder="Search coffee resources, creators, recipes..." aria-label="Search resources" />
+              <button id="clear-search-btn" class="icon-btn" aria-label="Clear search" style="display: none;">✕</button>
+            </div>
+            
+            <div class="filter-controls">
+              <div class="filter-group">
+                <label for="lang-filter" class="filter-label">Language</label>
+                <select id="lang-filter" aria-label="Filter by language">
+                  <option value="all">All Languages</option>
+                  <option value="English">English</option>
+                  <option value="Japanese">日本語</option>
+                  <option value="Chinese">中文</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label for="type-filter" class="filter-label">Resource Type</label>
+                <select id="type-filter" aria-label="Filter by resource type">
+                  <option value="all">All Types</option>
+                  <option value="Video Channel">YouTube / Video</option>
+                  <option value="Community Forum">Community Forum</option>
+                  <option value="Written Blog / Reviews">Written Blog</option>
+                  <option value="News & Competition Trends">News & Competitions</option>
+                  <option value="Lifestyle Community Platform">Lifestyle Platform</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label for="applicability-sort" class="filter-label">Home Applicability</label>
+                <select id="applicability-sort" aria-label="Sort by applicability">
+                  <option value="all">Show All</option>
+                  <option value="High">High Applicability</option>
+                  <option value="Medium">Medium/High</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resources Feed -->
+          <div id="resources-loading" class="skeleton-grid">
+            <div class="skeleton-card">
+              <div class="skeleton-line skeleton-header"></div>
+              <div class="skeleton-line skeleton-title"></div>
+              <div class="skeleton-line skeleton-desc"></div>
+              <div class="skeleton-line skeleton-footer"></div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-line skeleton-header"></div>
+              <div class="skeleton-line skeleton-title"></div>
+              <div class="skeleton-line skeleton-desc"></div>
+              <div class="skeleton-line skeleton-footer"></div>
+            </div>
+            <div class="skeleton-card">
+              <div class="skeleton-line skeleton-header"></div>
+              <div class="skeleton-line skeleton-title"></div>
+              <div class="skeleton-line skeleton-desc"></div>
+              <div class="skeleton-line skeleton-footer"></div>
+            </div>
+          </div>
+
+          <div id="resources-error" class="error-view" style="display: none;">
+            <span class="error-emoji">⚠️</span>
+            <p id="resources-error-msg">Could not load coffee resources.</p>
+            <button id="resources-retry-btn" class="primary-btn">Retry Fetch</button>
+          </div>
+
+          <div id="resources-grid" class="cards-grid">
+            <!-- Dynamic Cards Inserted Here -->
+          </div>
+        </section>
+
+        <!-- Tab Panel 2: Coffee Diary -->
+        <section id="diary-tab-panel" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-diary" style="display: none;">
+          
+          <!-- Diary Dashboard Stats -->
+          <section class="diary-dashboard" aria-label="Diary Statistics">
+            <div class="stat-card" id="stat-total-brews">
+              <div class="stat-icon-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-val-total">0</span>
+                <span class="stat-label">Total Brews</span>
+              </div>
+            </div>
+            <div class="stat-card" id="stat-fav-device">
+              <div class="stat-icon-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 22h20M12 2v20M5 12h14"/></svg></div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-val-device">—</span>
+                <span class="stat-label">Favorite Brewer</span>
+              </div>
+            </div>
+            <div class="stat-card" id="stat-avg-rating">
+              <div class="stat-icon-wrapper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="stat-info">
+                <span class="stat-value" id="stat-val-rating">—</span>
+                <span class="stat-label">Avg Brew Rating</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Diary Actions Toolbar -->
+          <div class="diary-toolbar">
+            <button id="add-log-btn" class="primary-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Brew Log
+            </button>
+
+            <div class="toolbar-divider"></div>
+
+            <div class="data-transfer-actions">
+              <button id="export-btn" class="secondary-btn" title="Backup diary logs to JSON">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Backup Logs
+              </button>
+              <button id="import-btn" class="secondary-btn" title="Restore diary logs from JSON file">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                Restore
+              </button>
+              <input type="file" id="import-file-input" accept=".json" style="display: none;" aria-hidden="true" />
+            </div>
+          </div>
+
+          <!-- Diary Logs Grid -->
+          <div id="diary-empty-view" class="empty-state">
+            <span class="empty-emoji">📝</span>
+            <h3>No Brew Logs Found</h3>
+            <p>Start recording your daily coffee extractions. Track ratio, temperature, flavor profiles, and ratings.</p>
+            <button id="diary-empty-add-btn" class="primary-btn">Log Your First Brew</button>
+          </div>
+
+          <div id="diary-grid" class="cards-grid">
+            <!-- Dynamic Diary Log Cards -->
+          </div>
+        </section>
+      </main>
+
+      <!-- Brew Dialog Modal -->
+      <dialog id="brew-dialog" class="glass-dialog">
+        <form method="dialog" id="brew-form">
+          <header class="dialog-header">
+            <h2 id="dialog-title">Log Daily Brew</h2>
+            <button type="button" id="brew-dialog-close" class="dialog-close-btn" aria-label="Close modal">✕</button>
+          </header>
+
+          <div class="dialog-body">
+            <!-- Basic Fields -->
+            <fieldset class="form-section">
+              <legend>Coffee Specs</legend>
+              <div class="form-row">
+                <div class="form-group flex-2">
+                  <label for="brew-bean">Coffee Bean / Origin <span class="required">*</span></label>
+                  <input type="text" id="brew-bean" required placeholder="e.g. Ethiopia Yirgacheffe Kochere" />
+                </div>
+                <div class="form-group flex-1">
+                  <label for="brew-roaster">Roaster</label>
+                  <input type="text" id="brew-roaster" placeholder="e.g. Kurasu Kyoto" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="brew-device">Brewing Device <span class="required">*</span></label>
+                  <select id="brew-device" required>
+                    <option value="Hario V60">Hario V60</option>
+                    <option value="Kalita Wave">Kalita Wave</option>
+                    <option value="Aeropress">Aeropress</option>
+                    <option value="Fellow Stagg [X]">Fellow Stagg [X]</option>
+                    <option value="Origami Dripper">Origami Dripper</option>
+                    <option value="Chemex">Chemex</option>
+                    <option value="French Press">French Press</option>
+                    <option value="Espresso">Espresso</option>
+                    <option value="Other">Other Dripper</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="brew-grind">Grind Size / Setting</label>
+                  <input type="text" id="brew-grind" placeholder="e.g. 18 clicks (Comandante)" />
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Extraction Metrics -->
+            <fieldset class="form-section">
+              <legend>Extraction Recipe</legend>
+              <div class="form-row three-cols">
+                <div class="form-group">
+                  <label for="brew-coffee-weight">Coffee Dose (g) <span class="required">*</span></label>
+                  <input type="number" id="brew-coffee-weight" required min="1" max="100" step="0.1" value="15.0" />
+                </div>
+                <div class="form-group">
+                  <label for="brew-water-weight">Water Yield (g) <span class="required">*</span></label>
+                  <input type="number" id="brew-water-weight" required min="10" max="2000" step="1" value="250" />
+                </div>
+                <div class="form-group calc-result-group">
+                  <span class="calc-label">Brew Ratio</span>
+                  <span id="brew-ratio-calc" class="calc-value">1:16.7</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="brew-temp">Water Temp (°C) <span class="required">*</span></label>
+                  <div class="slider-group">
+                    <input type="range" id="brew-temp" min="80" max="100" value="93" />
+                    <span class="slider-val-bubble"><span id="brew-temp-val">93</span>°C</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="brew-time">Brew Duration</label>
+                  <input type="text" id="brew-time" placeholder="e.g. 2:30" />
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Sensory Evaluation -->
+            <fieldset class="form-section">
+              <legend>Sensory Profile</legend>
+              <div class="sensory-grid">
+                <div class="sensory-slider-group">
+                  <label for="slider-sweet">Sweetness</label>
+                  <input type="range" id="slider-sweet" min="0" max="5" step="0.5" value="3" />
+                  <span class="sensory-bubble" id="val-sweet">3.0</span>
+                </div>
+
+                <div class="sensory-slider-group">
+                  <label for="slider-acid">Acidity</label>
+                  <input type="range" id="slider-acid" min="0" max="5" step="0.5" value="3" />
+                  <span class="sensory-bubble" id="val-acid">3.0</span>
+                </div>
+
+                <div class="sensory-slider-group">
+                  <label for="slider-bitter">Bitterness</label>
+                  <input type="range" id="slider-bitter" min="0" max="5" step="0.5" value="2.5" />
+                  <span class="sensory-bubble" id="val-bitter">2.5</span>
+                </div>
+
+                <div class="sensory-slider-group">
+                  <label for="slider-body">Body / Mouthfeel</label>
+                  <input type="range" id="slider-body" min="0" max="5" step="0.5" value="3" />
+                  <span class="sensory-bubble" id="val-body">3.0</span>
+                </div>
+
+                <div class="sensory-slider-group">
+                  <label for="slider-finish">Aftertaste / Finish</label>
+                  <input type="range" id="slider-finish" min="0" max="5" step="0.5" value="3" />
+                  <span class="sensory-bubble" id="val-finish">3.0</span>
+                </div>
+              </div>
+
+              <!-- Overall rating -->
+              <div class="form-group rating-form-group">
+                <label>Overall Satisfaction</label>
+                <div class="rating-stars" role="radiogroup" aria-label="Brew Rating">
+                  <button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
+                  <button type="button" class="star-btn" data-value="2" aria-label="2 stars">★</button>
+                  <button type="button" class="star-btn" data-value="3" aria-label="3 stars">★</button>
+                  <button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
+                  <button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
+                </div>
+                <input type="hidden" id="brew-rating" value="4" />
+              </div>
+
+              <div class="form-group">
+                <label for="brew-comments">Journal Comments & Flavor Notes</label>
+                <textarea id="brew-comments" placeholder="e.g. Jasmine floral aromas, stone fruit sweetness, lingering bergamot finish. Slight channeling towards the end." rows="3"></textarea>
+              </div>
+            </fieldset>
+          </div>
+
+          <footer class="dialog-footer">
+            <button type="button" id="brew-cancel-btn" class="secondary-btn">Cancel</button>
+            <button type="submit" id="brew-submit-btn" class="primary-btn">Save Brew Log</button>
+          </footer>
+        </form>
+      </dialog>
+
+      <!-- Delete Confirmation Dialog -->
+      <dialog id="delete-confirm-dialog" class="glass-dialog confirm-dialog">
+        <div class="confirm-content">
+          <div class="confirm-icon">⚠️</div>
+          <h2>Delete Brew Log?</h2>
+          <p>Are you sure you want to delete this brew record? This action is permanent and cannot be undone.</p>
+          <div class="confirm-actions">
+            <button id="delete-confirm-no" class="secondary-btn">Keep Log</button>
+            <button id="delete-confirm-yes" class="danger-btn">Delete Permanently</button>
+          </div>
+        </div>
+      </dialog>
+
+      <!-- Toast Notification Container -->
+      <div id="toast-container" class="toast-container"></div>
+
+      <!-- Footer -->
+      <footer class="app-footer-info">
+        <p>Built with Vanilla JS & CSS Grid. Powered by Antigravity AI.</p>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
